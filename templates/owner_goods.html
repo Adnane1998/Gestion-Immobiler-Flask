@@ -1,11 +1,14 @@
+
+
 <div class="container">
     <div class="row">
         <div class="col md-12">
 
             <div class="jumbotron p-3">
 
-                      <h2>Goods Avaible   {% if employees.type != "admin" %} in <b>{{employees.city}}</b>   {% endif %}{% if employees.type != "owner" %} <button type="button"  class="btn btn-success float-right"
-                data-toggle="modal" data-target="#mymodals">Add New Good</button>{% endif %} </h2>
+                 <h2>My Goods   </h2>
+
+
 
 
                 {% with messages = get_flashed_messages() %}
@@ -35,7 +38,7 @@
                 {% endwith %}
 
 
-                <table class="table table-hover table-dark">
+           <table class="table table-hover table-dark">
 
                     <tr>
 
@@ -46,12 +49,12 @@
                         <th>City</th>
                           <th>Characteristics</th>
 
-  {% if employees.type != "owner" %}
+
                         <th>Action</th>
-  {% endif %}
+
                     </tr>
 
-      {% for row in Goods %}
+      {% for row in owner_goods %}
 
                     <tr>
                         <td>{{row .good_id }}</td>
@@ -60,14 +63,14 @@
                         <td>{{row .type}}</td>
                         <td>{{row .city}}</td>
                         <td>{{row .characteristics}}</td>
-                   {% if employees.type != "owner" %}
+
                         <td>
                             <a href="/update_good/{{row.good_id }}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.good_id }}">Edit</a>
-                           
+
 
 
                         </td>
-      {% endif %}
+
                     </tr>
 
 
@@ -195,115 +198,7 @@
 </div>
 
 
-
-<div id="mymodal" class="modal fade" role="dialog">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-
-            <h4 class="modal-title">Add Good</h4>
-         </div>
-         <div class="modal-body">
-
-
-               <form action="/update_good/{{row.good_id}}" method="POST">
-
-
-               <div class="form-group">
-
-                  <label>Name:</label>
-                  <input type="text" class="form-control" name="name" required="1">
-
-
-               </div>
-                 <div class="form-group">
-
-                  <label>Type:</label>
-                  <input type="text" class="form-control" name="type" required="1">
-
-
-               </div>
-
-
-                <div class="form-group">
-
-
-                  <label>Description:</label>
-                  <input type="text" class="form-control" name="description" required="1">
-
-
-               </div>
-
-
-                <div class="form-group">
-
-
-                  <label>City:</label>
-                  <input type="text" class="form-control" name="city" required="1">
-
-
-               </div>
-                <div class="form-group">
-
-
-                  <label>Characteristics:</label>
-                  <input type="text" class="form-control" name="characteristics" required="1">
-
-
-               </div>
-                 <div class="form-group">
-
-
-                  <label>Owner:</label>
-                  <input type="number" class="form-control" name="user_id" required="1">
-
-
-               </div>
-
-
-
-               <div class="form-group">
-
-
-                  <button class="btn btn-primary" type="submit">Add Good</button>
-
-
-               </div>
-
-
-            </form>
-
-
-         </div>
-
-
-         <div class="modal-footer">
-
-
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-
-         </div>
-
-
-      </div>
-
-
-   </div>
-
-
-</div>
-
-
- {% endfor %}
-
-                </table>
-
-
-            </div>
-
-
-<div id="mymodals" class="modal fade" role="dialog">
+<div id="mymodal1" class="modal fade" role="dialog">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -400,8 +295,115 @@
 
 
 </div>
-                  <!-- Modal Add Employee-->
+<div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
 
+            <h4 class="modal-title">Add Good</h4>
+         </div>
+         <div class="modal-body">
+
+
+               <form action="/update_good/{{row.good_id}}" method="POST">
+
+
+               <div class="form-group">
+
+                  <label>Name:</label>
+                  <input type="text" class="form-control" name="name" required="1">
+
+
+               </div>
+                 <div class="form-group">
+
+                  <label>Type:</label>
+                  <input type="text" class="form-control" name="type" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>Description:</label>
+                  <input type="text" class="form-control" name="description" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>City:</label>
+                  <input type="text" class="form-control" name="city" required="1">
+
+
+               </div>
+                <div class="form-group">
+
+
+                  <label>Characteristics:</label>
+                  <input type="text" class="form-control" name="characteristics" required="1">
+
+
+               </div>
+                 <div class="form-group">
+
+
+                  <label>Owner:</label>
+                  <input type="number" class="form-control" name="user_id" required="1">
+
+
+               </div>
+
+
+
+               <div class="form-group">
+
+
+                  <button class="btn btn-primary" type="submit">Add User</button>
+
+
+               </div>
+
+
+            </form>
+
+
+         </div>
+
+
+         <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+
+</div>
+
+
+ {% endfor %}
+
+                </table>
+
+
+            </div>
+
+
+
+                  <!-- Modal Add Employee-->
 
 
 
@@ -412,5 +414,6 @@
 
     </div>
 
-
 </div>
+
+
