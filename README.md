@@ -27,7 +27,7 @@ Vue:JinJa<br/>
  4)<br/>
  docker build -t xxx <br/>
  docker run -it -p 5000:5000 xxxx.   <br/>
- Se diriger vers l'adresse http://0.0.0.0:5000/(id de l'admin)  <br/>
+ Se diriger vers l'adresse http://127.0.0.1:5000/ (id de l'admin)  <br/>
  
  
  
