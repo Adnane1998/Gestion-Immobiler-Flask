@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_swagger_ui import get_swaggerui_blueprint
-from sqlalchemy.orm import session, load_only
+
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -54,8 +53,7 @@ class User(db.Model):
         self.city = city
 
 
-# This is the index route where we are going to
-# query on all our Users data
+
 @app.route('/')
 def Index():
 
@@ -74,7 +72,7 @@ def User_HomePage(id):
     elif User.query.get(id).type == "owner" : return render_template("owner.html", employees=user_selected, Goods=goods,owner_goods= owner_goods)
     else: return render_template("user.html", employees= user_selected, Goods=goods)
 
-
+# this is our update route where we are going to update our users
 @app.route('/insert_user', methods=['POST'])
 def insert_user():
     if request.method == 'POST':
@@ -93,7 +91,24 @@ def insert_user():
 
         return request.form
 
+@app.route('/update_user/<id>', methods=['POST'])
+def update(id):
+        if request.method == 'POST':
+            my_data = User.query.get(id)
+            my_data.first_name = request.form['first_name']
+            my_data.last_name = request.form['last_name']
 
+            my_data.birth_date = request.form['birth_date']
+            my_data.city = request.form['city']
+            my_data.type = request.form['type']
+
+            db.session.add(my_data)
+            db.session.commit()
+            flash("User Updated Successfully")
+
+            return redirect(url_for('User_HomePage', id=id))
+
+# this is our update route where we are going to update our goods
 @app.route('/insert_good', methods=['POST'])
 def insert_good():
     if request.method == 'POST':
@@ -140,27 +155,7 @@ def update_good(id):
 
 
 
-# this is our update route where we are going to update our employee
-@app.route('/update_user/<id>', methods=['POST'])
-def update(id):
-    if request.method == 'POST':
-        my_data = User.query.get(id)
-        my_data.first_name = request.form['first_name']
-        my_data.last_name = request.form['last_name']
 
-        my_data.birth_date = request.form['birth_date']
-        my_data.city = request.form['city']
-        my_data.type = request.form['type']
-
-        db.session.add(my_data)
-        db.session.commit()
-        flash("Employee Updated Successfully")
-
-        return redirect(url_for('User_HomePage', id=id))
-
-
-# This is the index route where we are going to
-# query on all our Goods data
 
 @app.route('/<id>')
 def Good_HomePage(id):
